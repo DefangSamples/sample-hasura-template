@@ -1,0 +1,21 @@
+services:
+  hasura:
+    extends:
+      file: compose.yaml
+      service: hasura
+    environment:
+      - HASURA_GRAPHQL_DATABASE_URL=postgres://postgres:password@database:5432/postgres
+      - HASURA_GRAPHQL_ADMIN_SECRET=password
+    volumes:
+      - ./hasura:/hasura
+  database:
+    extends:
+      file: compose.yaml
+      service: database
+    environment:
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - database_data:/var/lib/postgresql/data
+
+volumes:
+  database_data:
